@@ -40,7 +40,7 @@ pip install pygame
 
 ## Run
 ```bash
-python3 muehle.py
+python3 nine-mens-morris.py
 ```
 
 ## Controls (short)
