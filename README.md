@@ -73,11 +73,10 @@ python3 nine-mens-morris.py
 - Toggle at runtime with the “L” key
   the menu shows the current language.
 - Default language can be set by editing
-  `CURRENT_LANG = "de"` or "en" in 
+  `CURRENT_LANG = "de"` or "en, fr, es" in 
   `nine-mens-morris.py`
-- Additional languages (e.g. French/Spanish)
-  may be added in the future.
-
+- Additional languages French/Spanish
+  
 ## Known notes
 - Wayland/remote desktops can influence window/input
   handling depending on your setup.
