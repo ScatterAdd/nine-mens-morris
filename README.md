@@ -1,4 +1,4 @@
-# Nine Men's Morris — Pygame
+# Nine Men's Morris (Mühle) — Pygame
 
 A Nine Men's Morris game written in Python using Pygame.
 
