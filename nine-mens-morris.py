@@ -1559,7 +1559,7 @@ def spielfeld_view(screen, font, clock, starter, state=None, stones_set=None):
 def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Nine Men's Morris - Menu")
+    pygame.display.set_caption("Nine Men's Morris / Mühle")
     clock = pygame.time.Clock()
     font = pygame.font.SysFont("FreeSans", FONT_SIZE)
     selected_idx = 0
