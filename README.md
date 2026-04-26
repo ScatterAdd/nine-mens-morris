@@ -20,6 +20,9 @@ A Nine Men's Morris game written in Python using Pygame.
   including dice roll to decide who starts
 - Best-of-3 match mode (singleplayer and network)
 - Mouse and keyboard controls, scalable UI
+- Bundled pre-game background image for menu and selection screens
+- The included background.png is a screenshot from the game itself and may be distributed with the project
+- You can replace the pre-game background with your own PNG or JPG image
 
 ## Requirements
 - Python 3.9+ (recommended 3.10–3.12)
@@ -42,6 +45,12 @@ pip install pygame
 ```bash
 python3 nine-mens-morris.py
 ```
+
+## Pre-Game Background
+- The file background.png is included in the repository and is used in the menu and selection screens before a match starts.
+- The current bundled image is a screenshot from the game itself.
+- If you want to use your own image, replace background.png in the project folder or change START_BG_FILENAME in nine-mens-morris.py.
+- PNG and JPG files are supported as long as the configured filename matches the actual file.
 
 ## Controls (short)
 - Menu:
@@ -73,10 +82,11 @@ python3 nine-mens-morris.py
 - Toggle at runtime with the “L” key
   the menu shows the current language.
 - Default language can be set by editing
-  `CURRENT_LANG = "de"` or "en, fr, es" in 
+  `CURRENT_LANG = "de"` or "en" in 
   `nine-mens-morris.py`
-- Additional languages French/Spanish
-  
+- Additional languages (e.g. French/Spanish)
+  may be added in the future.
+
 ## Known notes
 - Wayland/remote desktops can influence window/input
   handling depending on your setup.
