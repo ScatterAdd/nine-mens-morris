@@ -20,7 +20,7 @@ A Nine Men's Morris game written in Python using Pygame.
   including dice roll to decide who starts
 - Best-of-3 match mode (singleplayer and network)
 - Mouse and keyboard controls, scalable UI
-- Bundled pre-game background image for menu and selection screens
+- Bundled pre-game background image for the main menu, selection screens, and network menu
 - The included background.png is a screenshot from the game itself and may be distributed with the project
 - You can replace the pre-game background with your own PNG or JPG image
 
@@ -47,9 +47,11 @@ python3 nine-mens-morris.py
 ```
 
 ## Pre-Game Background
-- The file background.png is included in the repository and is used in the menu and selection screens before a match starts.
+- The file background.png is included in the repository and is loaded from the project folder next to nine-mens-morris.py.
+- It is used in the main menu, the difficulty and ruleset selection screens, the network menu, and other pre-game selection screens before a match starts.
 - The current bundled image is a screenshot from the game itself.
 - If you want to use your own image, replace background.png in the project folder or change START_BG_FILENAME in nine-mens-morris.py.
+- If the image cannot be loaded, the game falls back to the plain dark menu background.
 - PNG and JPG files are supported as long as the configured filename matches the actual file.
 
 ## Controls (short)
