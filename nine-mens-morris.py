@@ -17,6 +17,7 @@ import random
 import socket
 import select
 import math
+import os
 
 # constant / Konstanten
 # just in case 600x600 is too small, can be switched to 800x800.
@@ -29,6 +30,7 @@ FONT_SIZE = 40
 MENU_OPTIONS = ["Mensch vs SL", "Netzwerkspiel", "Hilfe"]
 DIFFICULTY_OPTIONS = ["Leicht", "Mittel", "Schwer"]
 RULESET_OPTIONS = ["Entschärft", "Turnier"]
+START_BG_FILENAME = "background.png"
 
 # Network defaults and menu dice herlper / 
 # Netzwerk-Defaults und Menü-/Würfel-Helfer
@@ -43,6 +45,40 @@ LANG_ORDER = ["de", "en", "fr", "es"]
 # debug overlay global toggle (key 'D') / 
 # Debug-Overlay global toggeln (Taste 'D')
 DEBUG_OVERLAY = False
+_start_bg_cache = {"size": None, "surface": None, "load_failed": False}
+
+
+def get_start_background_surface():
+    if _start_bg_cache["load_failed"]:
+        return None
+    target_size = (WIDTH, HEIGHT)
+    if _start_bg_cache["surface"] is not None and _start_bg_cache["size"] == target_size:
+        return _start_bg_cache["surface"]
+
+    image_path = os.path.join(os.path.dirname(__file__), START_BG_FILENAME)
+    try:
+        image = pygame.image.load(image_path).convert()
+        scaled = pygame.transform.smoothscale(image, target_size)
+    except Exception:
+        _start_bg_cache["load_failed"] = True
+        _start_bg_cache["surface"] = None
+        _start_bg_cache["size"] = None
+        return None
+
+    _start_bg_cache["surface"] = scaled
+    _start_bg_cache["size"] = target_size
+    return scaled
+
+
+def draw_pre_game_background(screen, overlay_alpha=110):
+    bg_surface = get_start_background_surface()
+    if bg_surface is not None:
+        screen.blit(bg_surface, (0, 0))
+        overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, overlay_alpha))
+        screen.blit(overlay, (0, 0))
+    else:
+        screen.fill((30, 30, 30))
 
 def toggle_debug_overlay():
     global DEBUG_OVERLAY
@@ -583,7 +619,7 @@ def confirm_abort(prompt="Spiel wirklich beenden?"):
         clock.tick(FPS)
 
 def draw_menu(screen, font, selected_idx):
-    screen.fill((30, 30, 30))
+    draw_pre_game_background(screen, overlay_alpha=120)
     title_font = pygame.font.SysFont("FreeSans", 64)
     title_surf = render_fit_text("Mühle", (255,255,255), max_width=WIDTH-60, base_size=64, min_size=28)
     screen.blit(title_surf, (WIDTH//2 - title_surf.get_width()//2, 60))
@@ -1837,7 +1873,7 @@ def show_help_menu(screen, font):
         clock.tick(FPS)
 
 def draw_network_menu(screen, font, mode, ip, port, selected_idx, bind_mode="local"):
-    screen.fill((30,30,30))
+    draw_pre_game_background(screen, overlay_alpha=125)
     title_surf = render_fit_text("Netzwerkspiel", (255,255,255), max_width=WIDTH-60, base_size=54, min_size=28)
     screen.blit(title_surf, (WIDTH//2 - title_surf.get_width()//2, 60))
     options = [
@@ -2579,7 +2615,7 @@ def select_difficulty(screen, font, clock):
     running = True
     title_font = pygame.font.SysFont("FreeSans", 54)
     while running:
-        screen.fill((30,30,30))
+        draw_pre_game_background(screen, overlay_alpha=125)
         title_surf = render_fit_text("Spielstärke wählen", (255,255,255), max_width=WIDTH-60, base_size=54, min_size=24)
         screen.blit(title_surf, (WIDTH//2 - title_surf.get_width()//2, 60))
         option_surfs = []
@@ -2627,7 +2663,7 @@ def select_ruleset(screen, font, clock):
     idx = 0
     title_font = pygame.font.SysFont("FreeSans", 54)
     while True:
-        screen.fill((30,30,30))
+        draw_pre_game_background(screen, overlay_alpha=125)
         title_surf = render_fit_text("Regelset wählen", (255,255,255), max_width=WIDTH-60, base_size=54, min_size=24)
         screen.blit(title_surf, (WIDTH//2 - title_surf.get_width()//2, 60))
         option_surfs = []
@@ -2676,7 +2712,7 @@ def simple_menu(screen, font, clock, options):
     # Einfache Auswahl, gibt Index zurück (0..n-1), ESC -> 0
     idx = 0
     while True:
-        screen.fill((30,30,30))
+        draw_pre_game_background(screen, overlay_alpha=125)
         title_surf = render_fit_text(tr("Auswahl"), (240,240,240), max_width=WIDTH-60, base_size=42, min_size=22)
         screen.blit(title_surf, (WIDTH//2 - title_surf.get_width()//2, 60))
         base_y = 160; spacing = 60
